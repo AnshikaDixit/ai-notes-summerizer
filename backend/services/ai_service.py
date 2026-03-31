@@ -1,6 +1,5 @@
 import requests
-
-OLLAMA_URL = "http://localhost:11434/api/generate"
+from backend.core.config import OLLAMA_URL, MODEL_NAME
 
 # def generate_response(prompt: str) -> str:
 #     """
@@ -59,7 +58,7 @@ def generate_response(prompt: str) -> str:
     response = requests.post(
         OLLAMA_URL,
         json={
-            "model": "llama3",
+            "model": MODEL_NAME,
             "prompt": final_prompt,
             "stream": False
         }
