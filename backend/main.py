@@ -1,31 +1,9 @@
 from fastapi import FastAPI
 import requests
 from backend.services.memory import get_history, add_message
+from backend.services.ai_service import generate_response
 
 app = FastAPI()
-
-OLLAMA_URL = "http://localhost:11434/api/generate"
-
-@app.get("/")
-def home():
-    return {"message": "AI Notes Backend Running 🚀"}
-
-@app.post("/generate")
-def generate(prompt: str):
-    response = requests.post(
-        OLLAMA_URL,
-        json={
-            "model": "llama3",
-            "prompt": prompt,
-            "stream": False
-        }
-    )
-
-    data = response.json()
-
-    return {
-        "response": data.get("response", "")
-    }
 
 @app.post("/chat")
 def chat(user_id: str, prompt: str):
@@ -59,21 +37,10 @@ def chat(user_id: str, prompt: str):
     # We end with "assistant:" so model continues from there
     full_prompt = context + f"user: {prompt}\nassistant:"
 
-    # Step 4: Send request to Ollama (LLM)
-    response = requests.post(
-        OLLAMA_URL,
-        json={
-            "model": "llama3",
-            "prompt": full_prompt,
-            "stream": False
-        }
-    )
+    # Step 4: Send request to Ollama (LLM) and get response
+    ai_response = generate_response(full_prompt)
 
-    # Step 5: Extract AI response
-    data = response.json()
-    ai_response = data.get("response", "")
-
-    # Step 6: Save both user + AI messages in memory
+    # Step 5: Save both user + AI messages in memory
     # So next request includes this conversation
     add_message(user_id, "user", prompt)
     add_message(user_id, "assistant", ai_response)

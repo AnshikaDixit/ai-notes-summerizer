@@ -39,6 +39,39 @@ Open:
 http://127.0.0.1:8000/docs
 ```
 
+### 🧠 Architecture & Design Decisions
+
+### Separation of Concerns
+
+This project follows a clean backend architecture by separating responsibilities across different layers:
+
+* **API Layer (`main.py`)**
+
+  * Handles HTTP requests and responses
+  * Orchestrates flow between components
+
+* **Service Layer (`ai_service.py`)**
+
+  * Handles interaction with the LLM (Ollama)
+  * Keeps AI logic isolated and reusable
+
+* **Memory Layer (`memory.py`)**
+
+  * Manages conversation history
+  * Enables context-aware responses
+
+### Why this matters
+
+* Improves code readability and maintainability
+* Makes the system scalable
+* Follows real-world backend design patterns
+
+### Key Concept
+
+LLMs do not have memory by default.
+This project simulates memory by injecting past conversation into the prompt before sending it to the model.
+
+
 ## 🚀 Future Improvements
 
 * Chat memory (context-aware AI)
