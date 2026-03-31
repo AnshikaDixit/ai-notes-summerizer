@@ -67,3 +67,33 @@ def generate_response(prompt: str) -> str:
 
     data = response.json()
     return data.get("response", "")
+
+
+def summarize_text(text: str) -> str:
+    """
+    Generates a concise summary of given text.
+
+    WHY:
+    - Core feature of AI Notes app
+    - Uses LLM with summarization-focused prompt
+    """
+
+    prompt = f"""
+    You are a notes summarizer.
+
+    Summarize the following text in a concise and clear way:
+
+    {text}
+    """
+
+    response = requests.post(
+        OLLAMA_URL,
+        json={
+            "model": "llama3",
+            "prompt": prompt,
+            "stream": False
+        }
+    )
+
+    data = response.json()
+    return data.get("response", "")

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import requests
 from backend.services.memory import get_history, add_message
 from backend.services.ai_service import generate_response
+from backend.services.ai_service import summarize_text
 
 app = FastAPI()
 
@@ -52,4 +53,18 @@ def chat(user_id: str, prompt: str):
 
     return {
         "response": ai_response
+    }
+
+@app.post("/summarize")
+def summarize(text: str):
+    """
+    Generates a concise summary of the given text.
+
+    This is a dedicated endpoint for summarization, separate from chat.
+    """
+
+    summary = summarize_text(text)
+
+    return {
+        "summary": summary
     }
