@@ -1,11 +1,11 @@
 from fastapi import APIRouter
-from services.memory import get_history, add_message
-from services.ai_service import generate_response
-from schemas.chat_schema import ChatRequest
+from backend.services.memory import get_history, add_message
+from backend.services.ai_service import generate_response
+from backend.schemas.chat_schema import ChatRequest
 
 router = APIRouter()
 
-@app.post("/chat")
+@router.post("/chat")
 def chat(user_id: str, prompt: str):
     """
     This endpoint handles a conversation with memory.

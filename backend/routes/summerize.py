@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from services.ai_service import summarize_text
+from backend.services.ai_service import summarize_text
 
 router = APIRouter()
 

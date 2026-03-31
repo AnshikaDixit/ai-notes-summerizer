@@ -5,8 +5,10 @@ from backend.services.ai_service import generate_response
 from backend.services.ai_service import summarize_text
 from backend.routes.chats import router as chat_router
 from backend.routes.summerize import router as summarize_router
+from backend.routes.notes import router as note_router
 
 app = FastAPI()
 
 app.include_router(chat_router)
 app.include_router(summarize_router)
+app.include_router(note_router)
